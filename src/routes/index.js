@@ -9,6 +9,8 @@ router.use("/users", require("./user"));
 // token:
 router.use("/tokens", require("./token"));
 
+// order:
+router.use("/orders", require("./order"));
 // pizza:
 router.use("/pizzas", require("./pizza"));
 // topping:

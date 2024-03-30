@@ -47,7 +47,21 @@ module.exports = (req, res, next) => {
 
     // Run for output:
     res.getModelList = async (Model, customFilter = {}, populate = null) => {
-        return await Model.find({ ...filter, ...search, ...customFilter }).sort(sort).skip(skip).limit(limit).populate(populate)
+    /* This lines bring toppings in an array when get request /pizzas.
+    const transformToppings = (pizza) => {
+        return pizza.toppingIds.map(topping => topping.name);
+    };
+    const pizzas = await Model.find({ ...filter, ...search, ...customFilter }).sort(sort).skip(skip).limit(limit).populate({ path: populate, select: 'name -_id' });
+    const transformedPizzas = pizzas.map(pizza => {
+        return {
+            ...pizza.toObject(),
+            toppingIds: transformToppings(pizza)
+        };
+    });
+
+    return transformedPizzas;
+    */
+    return await Model.find({ ...filter, ...search, ...customFilter }).sort(sort).skip(skip).limit(limit).populate(populate) // select: 'name -_id'
     }
 
     // Details:
