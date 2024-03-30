@@ -68,5 +68,21 @@ module.exports = {
             #swagger.summary = "simpleToken: Logout"
             #swagger.description = 'Delete token key.'
         */
+            const auth = req.headers?.authorization; 
+            const tokenKey = auth ? auth.split(" ") : null; 
+    
+            if (tokenKey[0] == "Token") {
+                const result = await Token.deleteOne({ token: tokenKey[1] });
+                res.send({
+                    error: false,
+                    message: "Token deleted. Logout was OK.",
+                    result,
+                });
+            } else { // for JWT
+                res.send({
+                    error: false,
+                    message: "JWT: No need any process for logout.",
+                });
+            }
 	},
 };
