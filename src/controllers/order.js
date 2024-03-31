@@ -1,6 +1,7 @@
 "use strict";
 /* ________________ Order Controller ________________ */
 const Order = require("../models/order");
+const Pizza = require("../models/pizza");
 
 module.exports = {
 	list: async (req, res) => {
@@ -23,7 +24,10 @@ module.exports = {
 			customFilter = {userId:req.user.id}
 		}	
 
-		const data = await res.getModelList(Order,customFilter,['userId','pizzaId']);
+		const data = await res.getModelList(Order,customFilter,[
+			'userId',
+			{path:'pizzaId', select:'-__v',populate:{path:'toppingIds',select:'name -_id'}}
+		]);
 		res.status(200).send({
 			error: false,
 			details: await res.getModelListDetails(Order,customFilter),
@@ -35,6 +39,10 @@ module.exports = {
             #swagger.tags = ["Orders"]
             #swagger.summary = "Create Order"
         */
+	   if(!req.body.price){
+		const pizzaData = await Pizza.findOne({_id:req.body.pizzaId})
+		req.body.price = pizzaData.price
+	   }
 
 		const data = await Order.create(req.body);
 		res.status(201).send({
