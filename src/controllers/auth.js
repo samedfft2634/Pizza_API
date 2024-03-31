@@ -69,13 +69,17 @@ module.exports = {
                         }
 
                         const accessToken = jwt.sign(accessInfo.data,accessInfo.key,{expiresIn:accessInfo.time})
-                        const refreshToken = jwt.sing(refreshInfo.data,refreshInfo.key,{expiresIn:refreshInfo.time})
+                        const refreshToken = jwt.sign(refreshInfo.data,refreshInfo.key,{expiresIn:refreshInfo.time})
                     /* JWT */
 
 
                     res.status(200).send({
                         error:false,
                         token:tokenData.token,
+                        bearer:{
+                            access: accessToken,
+                            refresh: refreshToken,
+                        },
                         user
                     })
                 } else {
