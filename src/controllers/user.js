@@ -30,6 +30,7 @@ module.exports = {
             #swagger.summary = "Create User"
         */
 
+	
 		const data = await User.create(req.body);
 		res.status(201).send({
 			error: false,
@@ -41,7 +42,12 @@ module.exports = {
             #swagger.tags = ["Users"]
             #swagger.summary = "Get Single User"
         */
-		const data = await User.findOne({ _id: req.params.id });
+			let customFilter = {}
+			if(!req.user.isAdmin){
+				customFilter = {_id:req.user._id}
+			}
+	
+		const data = await User.findOne({ _id: req.params.id , ...customFilter });
 		res.status(200).send({
 			error: false,
 			data,
@@ -52,7 +58,12 @@ module.exports = {
             #swagger.tags = ["Users"]
             #swagger.summary = "Update User"
         */
-       const data = await User.updateOne({_id:req.params.id},req.body,{runValidators:true})
+		let customFilter = {}
+		if(!req.user.isAdmin){
+			customFilter = {_id:req.user._id}
+		}
+		
+       const data = await User.updateOne({_id:req.params.id, ...customFilter},req.body,{runValidators:true})
        res.status(202).send({
         error:false,
         data,

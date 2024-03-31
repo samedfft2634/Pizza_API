@@ -3,18 +3,19 @@
 const router = require('express').Router()
 
 const pizza = require('../controllers/pizza')
+const {isAdmin} = require('../middlewares/permissions')
 
 // URL: /pizzas
 
 router.route('/')
 .get(pizza.list)
-.post(pizza.create)
+.post(isAdmin,pizza.create)
 
 router.route("/:id")
 .get(pizza.read)
-.put(pizza.update)
-.patch(pizza.update)
-.delete(pizza.delete)
+.put(isAdmin,pizza.update)
+.patch(isAdmin,pizza.update)
+.delete(isAdmin,pizza.delete)
 
 /* _______________________ - _______________________ */
 module.exports = router

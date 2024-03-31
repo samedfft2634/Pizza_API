@@ -47,6 +47,7 @@ module.exports = {
 						key: process.env.ACCESS_KEY,
 						time: "30m",
 						data: {
+							_id: user._id,
 							id: user.id,
 							username,
 							email,

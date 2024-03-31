@@ -3,8 +3,11 @@
 const router = require('express').Router()
 
 const topping = require('../controllers/topping')
+const {isAdmin} = require('../middlewares/permissions')
 
 // URL: /toppings
+
+router.use(isAdmin)
 
 router.route('/')
 .get(topping.list)
