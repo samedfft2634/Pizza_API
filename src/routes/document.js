@@ -27,7 +27,5 @@ const options = { customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-
   ] };
 router.use('/swagger', swaggerUi.serve, swaggerUi.setup(require('../configs/swagger.json'), options))
 
-
-app.use('/documents/swagger', swaggerUi.serve, swaggerUi.setup(swaggerJson, options))
-/* ------------------------------------------------------- */
+/* ___________________ */
 module.exports = router

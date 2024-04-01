@@ -17,7 +17,7 @@ module.exports = {
                 </ul>
             `
         */
-		const data = await res.getModelList(Pizza,{},'toppingIds');
+		const data = await res.getModelList(Pizza, {}, "toppingIds");
 		res.status(200).send({
 			error: false,
 			details: await res.getModelListDetails(Pizza),
@@ -41,7 +41,9 @@ module.exports = {
             #swagger.tags = ["Pizzas"]
             #swagger.summary = "Get Single Pizza"
         */
-		const data = await Pizza.findOne({ _id: req.params.id }).populate('toppingIds');
+		const data = await Pizza.findOne({ _id: req.params.id }).populate(
+			"toppingIds"
+		);
 		res.status(200).send({
 			error: false,
 			data,
@@ -52,6 +54,16 @@ module.exports = {
             #swagger.tags = ["Pizzas"]
             #swagger.summary = "Update Pizza"
         */
+
+		const pizza = await Pizza.findOne(
+			{ _id: req.params.id },
+			{ images: 1, id: 0 }
+		);
+		for (let file of req.files) {
+			pizza.images.push("/uploads/" + file.filename);
+		}
+		req.body.images = pizza.images;
+
 		const data = await Pizza.updateOne({ _id: req.params.id }, req.body, {
 			runValidators: true,
 		});

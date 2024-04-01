@@ -38,6 +38,8 @@ app.all('/',(req,res)=>{
         user:req.user
     })
 })
+
+app.use('/uploads',express.static('./uploads'))
 /* _______________________________________________ */
 
 app.use(require('./src/middlewares/errorHandler'))
