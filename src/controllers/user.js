@@ -1,6 +1,7 @@
 "use strict";
 /* ________________ User Controller ________________ */
 const User = require("../models/user");
+const sendMail = require('../helpers/sendMail')
 
 module.exports = {
 	list: async (req, res) => {
@@ -30,8 +31,17 @@ module.exports = {
             #swagger.summary = "Create User"
         */
 
-	
-		const data = await User.create(req.body);
+	   const data = await User.create(req.body);
+
+	   sendMail(
+		data.email,
+		"Welcome",
+		`
+		<h1>Welcome ${data.username}</h1>
+		<p>Welcome to our Pizza API services</p>
+		`
+	   )
+
 		res.status(201).send({
 			error: false,
 			data,

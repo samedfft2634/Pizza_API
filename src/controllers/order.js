@@ -2,6 +2,7 @@
 /* ________________ Order Controller ________________ */
 const Order = require("../models/order");
 const Pizza = require("../models/pizza");
+const sendMail = require('../helpers/sendMail')
 
 module.exports = {
 	list: async (req, res) => {
@@ -45,6 +46,16 @@ module.exports = {
 	   }
 
 		const data = await Order.create(req.body);
+
+		sendMail(
+			data.email,
+			"Order",
+			`
+			<p>Your order has been received.</p>
+			<h2>Enjoy your meal!</h2>
+			`
+		   )
+
 		res.status(201).send({
 			error: false,
 			data,
