@@ -15,6 +15,8 @@ dbConnection()
 /* __________________ Middlewares __________________ */
 app.use(express.json())
 
+app.use(express.urlencoded({extended:true}))
+
 app.use(require('./src/middlewares/logger'))
 
 app.use(require("./src/middlewares/authentication"));

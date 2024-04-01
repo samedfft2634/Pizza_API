@@ -37,8 +37,13 @@ const document = {
 	},
 	security: [{ Token: [] }, { Bearer: [] }],
 	definitions: {
-		// Models:
-		// "User": require('./src/models/user').schema.obj,
+		Models:{
+			"Order": require('./src/models/order').schema.obj,
+			"Pizza": require('./src/models/pizza').schema.obj,
+			"Token": require('./src/models/token').schema.obj,
+			"Topping": require('./src/models/topping').schema.obj,
+			"User": require('./src/models/user').schema.obj,
+		}
 	}
 }
 
